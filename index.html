@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="hi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>कृष्ण को पत्र</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1a202c" />
+    <link rel="icon" href="/icons/icon-192.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
