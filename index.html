@@ -1,70 +1,45 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>कृष्ण घड़ी</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>कृष्ण को पत्र</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
+    tailwind.config = { darkMode: 'class' };
   </script>
 </head>
-<body class="bg-cover bg-center bg-fixed transition-all duration-500 ease-in-out" id="body">
+<body id="body" class="bg-cover bg-center bg-fixed transition-all duration-500 ease-in-out">
 
-  <!-- Overlay for readability -->
+  <!-- Overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 transition-colors duration-300"></div>
 
   <!-- Theme Toggle Button -->
-  <button
-    onclick="toggleTheme()"
-    class="absolute top-4 right-4 z-10 p-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-md"
-    aria-label="Toggle theme"
-  >
+  <button onclick="toggleTheme()" class="absolute top-4 right-4 z-10 p-3 rounded-full bg-indigo-600 text-white shadow-md">
     <span id="theme-icon">☀️</span>
   </button>
 
-  <!-- Clock Content -->
-  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center text-white px-4">
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-2xl w-full max-w-sm border border-indigo-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">
-      <h1 class="text-4xl font-extrabold text-indigo-800 dark:text-indigo-300 mb-6">
-        🕉️ कृष्ण घड़ी 🕉️
-      </h1>
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-4 py-6">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-2xl w-full max-w-md border border-indigo-200 dark:border-gray-700 text-gray-800 dark:text-gray-200">
+      <h1 class="text-3xl font-extrabold text-indigo-800 dark:text-indigo-300 mb-4">🙏 कृष्ण को पत्र 🙏</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">अपने मन की बात प्रभु को लिखो।</p>
 
-      <div class="bg-indigo-700 text-white p-4 rounded-2xl mb-4 text-5xl font-mono font-bold tracking-wider" id="time">
-        00:00:00
-      </div>
+      <!-- Textarea -->
+      <textarea id="letter" rows="6" placeholder="प्रिय कृष्ण..." class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
 
-      <div class="bg-purple-600 text-white p-3 rounded-xl text-xl font-semibold" id="date">
-        दिन, तारीख
-      </div>
+      <button onclick="sendLetter()" class="mt-4 w-full bg-indigo-700 text-white px-4 py-2 rounded-full font-semibold hover:bg-indigo-800 shadow-md">पत्र भेजें 🕊️</button>
 
-      <p class="mt-6 text-center text-lg text-gray-600 dark:text-gray-400">
-        "हरे कृष्ण हरे कृष्ण, कृष्ण कृष्ण हरे हरे,<br>
-        हरे राम हरे राम, राम राम हरे हरे।"
-      </p>
+      <!-- Sent Letters -->
+      <h2 class="text-xl mt-6 font-bold text-indigo-700 dark:text-indigo-200">आपके पत्र</h2>
+      <div id="letterList" class="mt-2 space-y-2 max-h-60 overflow-y-auto"></div>
     </div>
 
-    <footer class="mt-8 text-center text-gray-300 dark:text-gray-400 text-sm">
-      &copy; 2025 कृष्ण घड़ी। भक्ति और समय का संगम।
-    </footer>
+    <footer class="mt-6 text-sm text-gray-400 dark:text-gray-500">© 2025 कृष्ण को पत्र</footer>
   </div>
 
   <script>
-    const lightBg = "https://placehold.co/1080x1920/E0F2F7/000000?text=Radha+Krishna+Day";
-    const darkBg = "https://placehold.co/1080x1920/1A202C/FFFFFF?text=Radha+Krishna+Night";
-
-    function updateClock() {
-      const now = new Date();
-      const h = now.getHours().toString().padStart(2, '0');
-      const m = now.getMinutes().toString().padStart(2, '0');
-      const s = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById('time').textContent = `${h}:${m}:${s}`;
-
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('date').textContent = now.toLocaleDateString('hi-IN', options);
-    }
+    const lightBg = "https://placehold.co/1080x1920/E0F2F7/000000?text=Krishna+Leela";
+    const darkBg = "https://placehold.co/1080x1920/1A202C/FFFFFF?text=Krishna+Night";
 
     function toggleTheme() {
       const html = document.documentElement;
@@ -73,25 +48,50 @@
       const isDark = html.classList.contains('dark');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
       icon.textContent = isDark ? '🌙' : '☀️';
-      setBackground();
+      setBg();
     }
 
-    function setBackground() {
+    function setBg() {
       const isDark = document.documentElement.classList.contains('dark');
       document.getElementById('body').style.backgroundImage = `url(${isDark ? darkBg : lightBg})`;
     }
 
-    // Theme setup on load
-    window.onload = () => {
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (saved === 'dark' || (!saved && prefersDark)) {
-        document.documentElement.classList.add('dark');
-        document.getElementById('theme-icon').textContent = '🌙';
+    function sendLetter() {
+      const letter = document.getElementById('letter').value.trim();
+      if (!letter) return alert("कृपया कुछ लिखें।");
+      const saved = JSON.parse(localStorage.getItem("letters") || "[]");
+      saved.unshift({ text: letter, date: new Date().toLocaleString('hi-IN') });
+      localStorage.setItem("letters", JSON.stringify(saved));
+      document.getElementById('letter').value = "";
+      loadLetters();
+      alert("पत्र भेजा गया 🙏");
+    }
+
+    function loadLetters() {
+      const list = document.getElementById("letterList");
+      list.innerHTML = "";
+      const saved = JSON.parse(localStorage.getItem("letters") || "[]");
+      if (saved.length === 0) {
+        list.innerHTML = "<p class='text-gray-500 dark:text-gray-400'>अभी कोई पत्र नहीं है।</p>";
+        return;
       }
-      setBackground();
-      updateClock();
-      setInterval(updateClock, 1000);
+      saved.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "bg-indigo-100 dark:bg-gray-700 text-left p-3 rounded-xl shadow-sm";
+        div.innerHTML = `<p class="whitespace-pre-wrap">${item.text}</p><p class="text-xs text-right text-gray-500 mt-1">${item.date}</p>`;
+        list.appendChild(div);
+      });
+    }
+
+    // Init
+    window.onload = () => {
+      const saved = localStorage.getItem("theme");
+      if (saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+        document.getElementById("theme-icon").textContent = "🌙";
+      }
+      setBg();
+      loadLetters();
     };
   </script>
 
